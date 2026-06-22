@@ -49,7 +49,7 @@ npm install
 
 **3. Create your `.env` file**
 ```bash
-cp .env.example .env
+ .env
 ```
 
 Fill in the values:
