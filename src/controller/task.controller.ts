@@ -32,6 +32,11 @@ export const getAllTasks = async (req: Request, res: Response) => {
 export const getTaskSummary = async (req: Request, res: Response) => {
     try {
         const data = await db.collection("task").get();
+
+        if(data.empty) {
+            return res.status(400).json({error: "No task to summarize"})
+        }
+
         const tasks = data.docs.map(doc => doc.data() as { title: string; description?: string });
 
         const summary = await summarizeTasks(tasks);
