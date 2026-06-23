@@ -1,10 +1,19 @@
 import { checkOpenAI } from "../../config/openapi.js";
 
+const MAX_TASK_FOR_SUMMARY = 50;
+
 export const summarizeTasks = async (tasks: { title: string; description?: string | null }[]) => {
+
+    const limitedTasks = tasks.slice(0, MAX_TASK_FOR_SUMMARY)
+
+    if(limitedTasks.length === 0) {
+        return "No tasks yet."
+    }
+
     const client = await checkOpenAI();
 
-    const taskList = tasks
-        .map((t, i) => `${i + 1}. ${t.title}${t.description ? `: ${t.description}` : ""}`)
+    const taskList = limitedTasks
+        .map((task, idx) => `${idx + 1}. ${task.title}${task.description ? `: ${task.description}` : ""}`)
         .join("\n");
 
     const response = await client.chat.completions.create({

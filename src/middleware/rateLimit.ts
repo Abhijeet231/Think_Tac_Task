@@ -10,5 +10,5 @@ export const globalLimiter = rateLimit({
 export const summaryLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     max: 7,
-    message: {error: "You've burned enough of my tokens for today. Go touch some grass."}
+    message: {error: "Token usages are limited to 7 times per hour. Please try again later."}
 })
